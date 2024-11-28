@@ -70,18 +70,6 @@ public class GameScoreCalculatorTest {
     }
 
     @Test
-    public void shouldNotReturnLargeStraightForInvalidSequence() {
-        // Given
-        List<Integer> diceRoll = List.of(1, 1, 3, 4, 5);
-
-        // When
-        int score = GameScoreCalculator.calculateScore(diceRoll);
-
-        // Then
-        assertEquals(0, score);
-    }
-
-    @Test
     public void shouldReturnThreeOfAKindScore() {
         // Given
         List<Integer> diceRoll = List.of(3, 3, 3, 1, 2);
@@ -93,8 +81,16 @@ public class GameScoreCalculatorTest {
         assertEquals(28, score);
     }
 
+    @Test
+    public void shouldReturnChanceScoreWhenNoOtherFigures() {
+        // Given
+        List<Integer> diceRoll = List.of(1, 2, 3, 4, 6);
 
+        // When
+        int score = GameScoreCalculator.calculateScore(diceRoll);
 
-
+        // Then
+        assertEquals(16, score);
+    }
 
 }

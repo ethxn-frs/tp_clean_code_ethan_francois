@@ -25,12 +25,12 @@ public class GameScoreCalculator {
         // ThreeOfKind Case
         if (counts.containsValue(3L)) return 28;
 
-        return 0;
+        // Chance Case ( default )
+        return calculateChance(diceRoll);
     }
 
     private static Map<Integer, Long> countDiceOccurrences(List<Integer> diceRoll) {
-        return diceRoll.stream()
-                .collect(Collectors.groupingBy(die -> die, Collectors.counting()));
+        return diceRoll.stream().collect(Collectors.groupingBy(die -> die, Collectors.counting()));
     }
 
     private static boolean isFullHouse(Map<Integer, Long> counts) {
@@ -40,5 +40,9 @@ public class GameScoreCalculator {
     private static boolean isLargeStraight(List<Integer> diceRoll) {
         List<Integer> sortedRoll = diceRoll.stream().sorted().toList();
         return sortedRoll.equals(List.of(1, 2, 3, 4, 5)) || sortedRoll.equals(List.of(2, 3, 4, 5, 6));
+    }
+
+    private static int calculateChance(List<Integer> diceRoll) {
+        return diceRoll.stream().mapToInt(Integer::intValue).sum();
     }
 }
