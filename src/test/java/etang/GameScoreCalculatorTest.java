@@ -81,4 +81,20 @@ public class GameScoreCalculatorTest {
         assertEquals(0, score);
     }
 
+    @Test
+    public void shouldReturnThreeOfAKindScore() {
+        // Given
+        List<Integer> diceRoll = List.of(3, 3, 3, 1, 2);
+
+        // When
+        int score = GameScoreCalculator.calculateScore(diceRoll);
+
+        // Then
+        assertEquals(28, score);
+    }
+
+
+
+
+
 }

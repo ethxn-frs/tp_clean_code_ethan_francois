@@ -22,6 +22,9 @@ public class GameScoreCalculator {
         // Large Straight Case
         if (isLargeStraight(diceRoll)) return 40;
 
+        // ThreeOfKind Case
+        if (counts.containsValue(3L)) return 28;
+
         return 0;
     }
 
