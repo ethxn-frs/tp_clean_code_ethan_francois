@@ -14,6 +14,8 @@ public class GameScoreCalculator {
 
     public static int calculateScore(List<Integer> diceRoll) {
 
+        if (diceRoll.size() != 5) return 0;
+
         Map<Integer, Long> counts = countDiceOccurrences(diceRoll);
 
         // YAMS Case
