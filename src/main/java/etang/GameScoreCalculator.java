@@ -2,6 +2,7 @@ package etang;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class GameScoreCalculator {
@@ -12,11 +13,16 @@ public class GameScoreCalculator {
     private static final int SCORE_LARGE_STRAIGHT = 40;
     private static final int SCORE_THREE_OF_KIND = 28;
 
-    public static int calculateScore(List<Integer> diceRoll) {
+    public static int calculateScore(List<Integer> diceRoll, Set<Figure> usedFigures) {
 
         if (diceRoll.size() != 5) return 0;
 
         Map<Integer, Long> counts = countDiceOccurrences(diceRoll);
+        
+        if (!usedFigures.contains(Figure.YAMS) && isYams(counts)) {
+            usedFigures.add(Figure.YAMS);
+            return Figure.YAMS.getScore();
+        }
 
         // YAMS Case
         if (isYams(counts)) return SCORE_YAMS;
