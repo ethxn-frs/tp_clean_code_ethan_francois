@@ -33,5 +33,52 @@ public class GameScoreCalculatorTest {
         assertEquals(35, score);
     }
 
+    @Test
+    public void shouldReturnFullScore() {
+        // Given
+        List<Integer> diceRoll = List.of(4, 4, 4, 1, 1);
+
+        // When
+        int score = GameScoreCalculator.calculateScore(diceRoll);
+
+        // Then
+        assertEquals(30, score);
+    }
+
+    @Test
+    public void shouldReturnLargeStraightScoreForFirstSequence() {
+        // Given
+        List<Integer> diceRoll = List.of(1, 2, 3, 4, 5);
+
+        // When
+        int score = GameScoreCalculator.calculateScore(diceRoll);
+
+        // Thn
+        assertEquals(40, score);
+    }
+
+    @Test
+    public void shouldReturnLargeStraightScoreForSecondSequence() {
+        // Given
+        List<Integer> diceRoll = List.of(2, 3, 4, 5, 6);
+
+        // When
+        int score = GameScoreCalculator.calculateScore(diceRoll);
+
+        // Then
+        assertEquals(40, score);
+    }
+
+    @Test
+    public void shouldNotReturnLargeStraightForInvalidSequence() {
+        // Given
+        List<Integer> diceRoll = List.of(1, 1, 3, 4, 5);
+
+        // When
+        int score = GameScoreCalculator.calculateScore(diceRoll);
+
+        // Then
+        assertEquals(0, score);
+    }
 
 }
