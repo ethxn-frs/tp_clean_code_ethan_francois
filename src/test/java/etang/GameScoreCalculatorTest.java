@@ -53,7 +53,7 @@ public class GameScoreCalculatorTest {
         // When
         int score = GameScoreCalculator.calculateScore(diceRoll);
 
-        // Thn
+        // Then
         assertEquals(40, score);
     }
 
