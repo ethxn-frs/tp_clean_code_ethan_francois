@@ -1,8 +1,6 @@
 package etang;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class GameScoreCalculator {
@@ -18,28 +16,33 @@ public class GameScoreCalculator {
         if (diceRoll.size() != 5) return 0;
 
         Map<Integer, Long> counts = countDiceOccurrences(diceRoll);
-        
+
         if (!usedFigures.contains(Figure.YAMS) && isYams(counts)) {
             usedFigures.add(Figure.YAMS);
             return Figure.YAMS.getScore();
         }
 
-        // YAMS Case
-        if (isYams(counts)) return SCORE_YAMS;
+        if (!usedFigures.contains(Figure.FOUR_OF_A_KIND) && isFourOfKind(counts)) {
+            usedFigures.add(Figure.FOUR_OF_A_KIND);
+            return Figure.FOUR_OF_A_KIND.getScore();
+        }
 
-        // FourOfKind Case
-        if (isFourOfKind(counts)) return SCORE_FOUR_OF_KIND;
+        if (!usedFigures.contains(Figure.FULL_HOUSE) && isFullHouse(counts)) {
+            usedFigures.add(Figure.FULL_HOUSE);
+            return Figure.FULL_HOUSE.getScore();
+        }
 
-        // Full house Case
-        if (isFullHouse(counts)) return SCORE_FULL_HOUSE;
+        if (!usedFigures.contains(Figure.LARGE_STRAIGHT) && isLargeStraight(diceRoll)) {
+            usedFigures.add(Figure.LARGE_STRAIGHT);
+            return Figure.LARGE_STRAIGHT.getScore();
+        }
 
-        // Large Straight Case
-        if (isLargeStraight(diceRoll)) return SCORE_LARGE_STRAIGHT;
+        if (!usedFigures.contains(Figure.THREE_OF_A_KIND) && isThreeOfKind(counts)) {
+            usedFigures.add(Figure.THREE_OF_A_KIND);
+            return Figure.THREE_OF_A_KIND.getScore();
+        }
 
-        // ThreeOfKind Case
-        if (isThreeOfKind(counts)) return SCORE_THREE_OF_KIND;
-
-        // Chance Case ( default )
+        usedFigures.add(Figure.CHANCE);
         return calculateChance(diceRoll);
     }
 
@@ -71,4 +74,16 @@ public class GameScoreCalculator {
     private static int calculateChance(List<Integer> diceRoll) {
         return diceRoll.stream().mapToInt(Integer::intValue).sum();
     }
+
+    public static List<Integer> calculateGameScores(List<List<Integer>> diceRolls) {
+        Set<Figure> usedFigures = new HashSet<>();
+        List<Integer> scores = new ArrayList<>();
+
+        for (List<Integer> roll : diceRolls) {
+            scores.add(calculateScore(roll, usedFigures));
+        }
+
+        return scores;
+    }
+
 }
