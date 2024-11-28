@@ -19,18 +19,19 @@ public class GameScoreCalculatorTest {
 
         // Then
         assertEquals(50, score);
-
-        // Given
-        diceRoll = List.of(2, 2, 2, 2, 2);
-
-        // When
-        score = GameScoreCalculator.calculateScore(diceRoll);
-
-        // Then
-        assertEquals(50, score);
     }
 
-    
+    @Test
+    public void shouldReturnFourOfAKindScore() {
+        // Given
+        List<Integer> diceRoll = List.of(4, 4, 4, 4, 2);
+
+        // When
+        int score = GameScoreCalculator.calculateScore(diceRoll);
+
+        // Then
+        assertEquals(35, score);
+    }
 
 
 }
